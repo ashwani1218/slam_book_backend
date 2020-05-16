@@ -1,8 +1,8 @@
-package com.ashwani.slambook.service.impl;
+package com.ashwani.slambook.dataservice.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.ashwani.slambook.service.RoleService;
+import com.ashwani.slambook.dataservice.RoleService;
 
 @Service
 public class RoleServiceImpl implements RoleService{

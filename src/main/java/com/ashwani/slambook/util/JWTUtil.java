@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.ashwani.slambook.entity.User;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -71,6 +72,12 @@ public class JWTUtil {
 	}
 	
 	public Boolean validateToken(String token) {
-		return !isTokenExpired(token);
+		try{
+			Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+			return true;
+		}
+		catch(JwtException | IllegalArgumentException e) {
+			return false;
+		}
 	}
 }

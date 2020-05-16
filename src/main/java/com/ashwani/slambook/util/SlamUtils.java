@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
-public class SlamUitls {
+public class SlamUtils {
 
 	public static final boolean isNullOrZero(final Long o) {
 		if(o==null) {
