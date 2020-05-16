@@ -21,6 +21,8 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTUtil {
 
+	
+
 	@Value("${jjwt.expiration}")
 	private String expirationTime;
 	
@@ -72,7 +74,7 @@ public class JWTUtil {
 	
 	public Boolean validateToken(String token) {
 		try{
-			Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(secretKey)).parseClaimsJws(token);
+			Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(secretKey)).build().parseClaimsJws(token);
 
 			return true;
 		}
