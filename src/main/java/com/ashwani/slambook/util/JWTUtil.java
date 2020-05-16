@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.entity.User;
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -20,17 +21,16 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTUtil {
 
-	@Value("${jjwt.secret}")
-	private String secret;
-
 	@Value("${jjwt.expiration}")
 	private String expirationTime;
 	
 	private Key key;
 
+	byte[] secretKey = Base64.decode("L8QRqizmJJi7M9dUYuBFmvxJ00zYPICBnDXCm5u7yLU=");
+	
 	@PostConstruct
 	public void init(){
-		this.key = Keys.hmacShaKeyFor(secret.getBytes());
+		this.key = Keys.hmacShaKeyFor(secretKey);
 	}
 
 	public Claims getAllClaimsFromToken(String token) {
@@ -63,7 +63,6 @@ public class JWTUtil {
 		final Date expirationDate = new Date(createdDate.getTime() + expirationTimeLong * 1000);
 
 		return Jwts.builder()
-				.setClaims(claims)
 				.setSubject(username)
 				.setIssuedAt(createdDate)
 				.setExpiration(expirationDate)
@@ -73,7 +72,8 @@ public class JWTUtil {
 	
 	public Boolean validateToken(String token) {
 		try{
-			Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+			Jwts.parser().setSigningKey(Keys.hmacShaKeyFor(secretKey)).parseClaimsJws(token);
+
 			return true;
 		}
 		catch(JwtException | IllegalArgumentException e) {

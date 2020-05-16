@@ -4,12 +4,15 @@
 package com.ashwani.slambook.translator;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.entity.User;
 import com.ashwani.slambook.model.request.RegistrationRequest;
+import com.ashwani.slambook.repository.RoleRepository;
 
 /**
  *
@@ -21,6 +24,9 @@ import com.ashwani.slambook.model.request.RegistrationRequest;
 @Component
 public class UserTranslator {
 
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	public User translateRegistrationmodelToUser(RegistrationRequest userRequest) {
 		User user = new User();
 		
@@ -29,6 +35,7 @@ public class UserTranslator {
 		user.setUsername(userRequest.getUsername());
 		user.setPassword(userRequest.getPassword());
 		user.setCreatedAt(new Timestamp(new Date().getTime()));
+		user.setRoles(Collections.singletonList(roleRepository.findByRole("user")));
 		user.setIsActive(1);
 		
 		return user;
