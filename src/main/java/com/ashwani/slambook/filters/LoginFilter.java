@@ -36,12 +36,13 @@ public class LoginFilter implements Filter{
 			System.out.println(token);
 			if(jwtUtil.validateToken(token)) {
 				chain.doFilter(request, response);
-			}else {
+			}
+			else {
 				resp.getWriter().write("Invalid token");
 			}
 		}
 		
-		chain.doFilter(request, response);
+//		chain.doFilter(request, response);
 		
 	}
 

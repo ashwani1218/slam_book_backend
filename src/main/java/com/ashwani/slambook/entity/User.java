@@ -3,6 +3,7 @@ package com.ashwani.slambook.entity;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -45,6 +47,9 @@ public class User {
 	
 	@Column(name ="isActive",nullable = false)
 	private int isActive;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+	private List<Slam> slams;
 	
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns=@JoinColumn(name = "user_id"), inverseJoinColumns=@JoinColumn(name = "role_id"))
@@ -145,6 +150,15 @@ public class User {
 
 	public void setMates(Set<User> mates) {
 		this.mates = mates;
+	}
+
+	
+	public List<Slam> getSlams() {
+		return slams;
+	}
+
+	public void setSlams(List<Slam> slams) {
+		this.slams = slams;
 	}
 
 	@Override

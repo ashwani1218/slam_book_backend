@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.ashwani.slambook.constants.JWTConstants;
 import com.ashwani.slambook.entity.User;
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 
@@ -28,7 +29,7 @@ public class JWTUtil {
 	
 	private Key key;
 
-	byte[] secretKey = Base64.decode("L8QRqizmJJi7M9dUYuBFmvxJ00zYPICBnDXCm5u7yLU=");
+	byte[] secretKey = Base64.decode(JWTConstants.SECRET);
 	
 	@PostConstruct
 	public void init(){
@@ -75,10 +76,9 @@ public class JWTUtil {
 	public Boolean validateToken(String token) {
 		try{
 			Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(secretKey)).build().parseClaimsJws(token);
-
 			return true;
 		}
-		catch(JwtException | IllegalArgumentException e) {
+		catch(JwtException e) {
 			return false;
 		}
 	}
