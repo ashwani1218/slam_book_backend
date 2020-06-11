@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.constants.ResponseConstants;
+import com.ashwani.slambook.model.response.GetAllFriendsResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
 
@@ -36,7 +37,7 @@ public class ValidationConfigBuilder {
 	}
 
 	/**
-	 * @return
+	 * @return RegistrationResponse
 	 */
 	public RegistrationResponse alreadyAnUser() {
 		RegistrationResponse resp = new RegistrationResponse();
@@ -49,7 +50,7 @@ public class ValidationConfigBuilder {
 	}
 
 	/**
-	 * @return
+	 * @return RegistrationResponse
 	 */
 	public RegistrationResponse invalidRegistrationRequest() {
 		RegistrationResponse resp = new RegistrationResponse();
@@ -58,6 +59,21 @@ public class ValidationConfigBuilder {
 		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
 		resp.setResponseDescription(ResponseConstants.EMPTY_REGISTRATION_REQUEST);
 		resp.setUsername(null);
+		return resp;
+	}
+
+	/**
+	 * @return GetAllFriendsResponse
+	 */
+	public GetAllFriendsResponse getAllFriendsSuccessResponseBuilder() {
+		GetAllFriendsResponse resp = new GetAllFriendsResponse();
+		
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.INVALID_USER);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setFriends(null);
+		
 		return resp;
 	}
 

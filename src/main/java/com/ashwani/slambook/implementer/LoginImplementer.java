@@ -3,6 +3,8 @@
  */
 package com.ashwani.slambook.implementer;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import com.ashwani.slambook.model.request.LoginRequest;
 import com.ashwani.slambook.model.request.RegistrationRequest;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
-import com.ashwani.slambook.response_builder.SuccesConfigBuilder;
+import com.ashwani.slambook.response_builder.SuccessConfigBuilder;
 import com.ashwani.slambook.response_builder.ValidationConfigBuilder;
 import com.ashwani.slambook.translator.UserTranslator;
 import com.ashwani.slambook.util.JWTUtil;
@@ -40,7 +42,7 @@ public class LoginImplementer {
 	private ValidationConfigBuilder validationConfigBuilder;
 	
 	@Autowired 
-	private SuccesConfigBuilder sucessConfigBuilder;
+	private SuccessConfigBuilder sucessConfigBuilder;
 	
 	@Autowired
 	private ModelValidator modelValidator;
@@ -72,17 +74,17 @@ public class LoginImplementer {
 			response = validationConfigBuilder.unauthenticUser();
 		}
 		else {
-			User u = userService.findByUsername(user.getUsername());
-			String token = jwtUtil.generateToken(u);
+			Optional<User> u = userService.findByUsername(user.getUsername());
+			String token = jwtUtil.generateToken(u.get());
 			response = sucessConfigBuilder.createJwt(token);
 		}
 		return response;
 	}
 
 	public  Boolean isAuthenticUser(LoginRequest user) {
-		User u = userService.findByUsername(user.getUsername());
+		Optional<User> u = userService.findByUsername(user.getUsername());
 		
-		if(u.getPassword().equals(user.getPassword())) {
+		if(u.get().getPassword().equals(user.getPassword())) {
 			return true;
 		}
 		return false;

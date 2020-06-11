@@ -10,11 +10,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ashwani.slambook.util.JWTUtil;
 
 public class LoginFilter implements Filter{
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(LoginFilter.class);
+	
 	
 	@Autowired
 	private JWTUtil jwtUtil;
@@ -33,8 +38,10 @@ public class LoginFilter implements Filter{
 		}
 		else {
 			String token = authHeader.substring(7);
-			System.out.println(token);
-			if(jwtUtil.validateToken(token)) {
+			LOGGER.info("Token: {}",token);
+			Boolean isValid = jwtUtil.validateToken(token);
+			LOGGER.info("isValid: {}",isValid);
+			if(isValid) {
 				chain.doFilter(request, response);
 			}
 			else {
@@ -42,7 +49,7 @@ public class LoginFilter implements Filter{
 			}
 		}
 		
-//		chain.doFilter(request, response);
+		chain.doFilter(request, response);
 		
 	}
 

@@ -1,18 +1,21 @@
 package com.ashwani.slambook.util;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.constants.JWTConstants;
 import com.ashwani.slambook.entity.User;
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -22,6 +25,7 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JWTUtil {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(JWTUtil.class);
 	
 
 	@Value("${jjwt.expiration}")
@@ -29,7 +33,8 @@ public class JWTUtil {
 	
 	private Key key;
 
-	byte[] secretKey = Base64.decode(JWTConstants.SECRET);
+	byte[] secretKey = Base64.getDecoder().decode(JWTConstants.SECRET);
+	
 	
 	@PostConstruct
 	public void init(){
@@ -74,8 +79,14 @@ public class JWTUtil {
 	}
 	
 	public Boolean validateToken(String token) {
+		LOGGER.info("token : {}", token);
+		LOGGER.info("Key : {}", key);
+		
+		
 		try{
-			Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(secretKey)).build().parseClaimsJws(token);
+			if(!isTokenExpired(token)) {
+				Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(secretKey)).build().parseClaimsJws(token);
+			}
 			return true;
 		}
 		catch(JwtException e) {

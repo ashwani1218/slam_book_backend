@@ -1,5 +1,7 @@
 package com.ashwani.slambook.model.response;
 
+import com.ashwani.slambook.model.BaseResponse;
+
 public class LoginResponse extends BaseResponse{
 
 	/**

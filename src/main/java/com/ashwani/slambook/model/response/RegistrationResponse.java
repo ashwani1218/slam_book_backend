@@ -3,6 +3,8 @@
  */
 package com.ashwani.slambook.model.response;
 
+import com.ashwani.slambook.model.BaseResponse;
+
 /**
  *
  * @author Ashwani Pandey

@@ -1,5 +1,7 @@
 package com.ashwani.slambook.validator;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +22,8 @@ public class DatabaseValidator {
 	 * @return
 	 */
 	public boolean isNotAUser(RegistrationRequest userRequest) {
-		User user = userService.findByUsername(userRequest.getUsername());
-		if(SlamUtils.isNullOrEmpty(user)) {
+		Optional<User> user = userService.findByUsername(userRequest.getUsername());
+		if(!user.isPresent() || SlamUtils.isNullOrEmpty(user)) {
 			return true;
 		}
 		return false;

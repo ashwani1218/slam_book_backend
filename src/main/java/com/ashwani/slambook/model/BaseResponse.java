@@ -1,4 +1,4 @@
-package com.ashwani.slambook.model.response;
+package com.ashwani.slambook.model;
 
 import java.io.Serializable;
 
