@@ -27,13 +27,17 @@ public class SuccessConfigBuilder {
 	/**
 	 * @return LoginResponse
 	 */
-	public LoginResponse createJwt(String token) {
+	public LoginResponse createJwt(String token, User u) {
 
 		LoginResponse resp = new LoginResponse();
 		resp.setHttpStatus(HttpStatus.OK);
 		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
-		resp.setResponseDescription(token);
+		resp.setResponseDescription(ResponseConstants.SUCCESS_LOGIN_DESCRIPTION);
 		resp.setStatus(ResponseConstants.SUCCESS_LOGIN_STATUS);
+		resp.setFirstname(u.getFirstname());
+		resp.setLastname(u.getLastname());
+		resp.setUsername(u.getUsername());
+		resp.setToken(token);
 		return resp;
 
 	}

@@ -6,6 +6,8 @@ public class RegistrationRequest {
 	
 	private String lastname;
 	
+	private String email;
+	
 	private String username;
 	
 	private String password;
@@ -24,6 +26,15 @@ public class RegistrationRequest {
 
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {

@@ -76,7 +76,7 @@ public class LoginImplementer {
 		else {
 			Optional<User> u = userService.findByUsername(user.getUsername());
 			String token = jwtUtil.generateToken(u.get());
-			response = sucessConfigBuilder.createJwt(token);
+			response = sucessConfigBuilder.createJwt(token,u.get());
 		}
 		return response;
 	}
@@ -84,6 +84,9 @@ public class LoginImplementer {
 	public  Boolean isAuthenticUser(LoginRequest user) {
 		Optional<User> u = userService.findByUsername(user.getUsername());
 		
+		if(!u.isPresent()) {
+			return false;
+		}
 		if(u.get().getPassword().equals(user.getPassword())) {
 			return true;
 		}

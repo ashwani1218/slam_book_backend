@@ -33,6 +33,7 @@ public class UserTranslator {
 		user.setFirstname(userRequest.getFirstname());
 		user.setLastname(userRequest.getLastname());
 		user.setUsername(userRequest.getUsername());
+		user.setEmail(userRequest.getEmail());
 		user.setPassword(userRequest.getPassword());
 		user.setCreatedAt(new Timestamp(new Date().getTime()));
 		user.setRoles(Collections.singletonList(roleRepository.findByRole("user")));

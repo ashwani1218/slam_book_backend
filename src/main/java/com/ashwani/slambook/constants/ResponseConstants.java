@@ -25,6 +25,7 @@ public class ResponseConstants {
 	public static final String INVALID_USER = "Invalid Username";
 
 	public static final String SUCCESS_REGISTRATION = "Registration Successful";
+	public static final String SUCCESS_LOGIN_DESCRIPTION = "Authentication Successful";
 	public static final String SUCCESS_REQUEST = " Successful Request";
 	public static final String NO_FRIENDS = "Sorry you have no friends";
 	

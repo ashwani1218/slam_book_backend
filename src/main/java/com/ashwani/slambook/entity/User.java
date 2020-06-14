@@ -17,6 +17,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -29,23 +31,32 @@ public class User {
 	@Column(name="user_id")
 	private Long id;
 	
-	@Column(name ="firstname")
+	@Column(name ="user_firstname")
+	@NotNull(message = "firstname cannot be null")
 	private String firstname;
 	
-	@Column(name ="lastname")
+	@NotNull(message = "lastname cannot be null")
+	@Column(name ="user_lastname")
 	private String lastname;
 	
-	@Column(name= "username")
+	@NotNull(message = "username cannot be null")
+	@Column(name= "user_username")
 	private String username;
 	
+	@NotNull(message = "email cannot be null")
+	@Column(name="user_email")
+	@Email
+	private String email;
+	
 	@JsonIgnore
-	@Column(name = "password")
+	@NotNull(message = "password cannot be null")
+	@Column(name = "user_password")
 	private String password;
 	
-	@Column(name = "created_at")
+	@Column(name = "user_created_at")
 	private Timestamp createdAt;
 	
-	@Column(name = "updated_at")
+	@Column(name = "user_updated_at")
 	private Timestamp updatedAt;
 	
 	@Column(name ="isActive",nullable = false)
@@ -97,6 +108,15 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
