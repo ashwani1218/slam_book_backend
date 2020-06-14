@@ -21,7 +21,7 @@ This application uses JWT for authentication and authorization.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ##Using Docker for mysql
-docker run --name mysql101 -p 3306 -e MYSQL_ROOT_PASSWORD=Ashwani@1 -e MYSQL_DATABASE=slam -e MYSQL_USER=root -d mysql/mysql-server:latest
+#docker run --name slam-sql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=ashwani -e MYSQL_PASSWORD=password  -e MYSQL_DATABASE=slam  -d mysql/mysql-server:5.7
 
 #connect to sql
 docker exec -it mysql101 mysql -u root -p
@@ -33,7 +33,7 @@ CREATE USER 'ashwani'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON * . * TO 'ashwani'@'%';
 
 #connect to sql
-docker exec -it mysql101 mysql -u ashwani -p password
+docker exec -it mysql101 mysql -u ashwani -p
 
 #display mysql details
 docker inspect mysql101
