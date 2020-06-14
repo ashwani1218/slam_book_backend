@@ -13,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.util.JWTUtil;
 
+//@Component
 public class LoginFilter implements Filter{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginFilter.class);
 	
 	
-	@Autowired
-	private JWTUtil jwtUtil;
+	
+	private JWTUtil jwtUtil = new JWTUtil();
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)

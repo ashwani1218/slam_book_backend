@@ -28,18 +28,18 @@ public class JWTUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JWTUtil.class);
 	
 
-	@Value("${jjwt.expiration}")
-	private String expirationTime;
+//	@Value("${jjwt.expiration}")
+	private String expirationTime = "28800";
 	
-	private Key key;
 
 	byte[] secretKey = Base64.getDecoder().decode(JWTConstants.SECRET);
 	
+	private Key key = Keys.hmacShaKeyFor(secretKey);;
 	
-	@PostConstruct
-	public void init(){
-		this.key = Keys.hmacShaKeyFor(secretKey);
-	}
+//	@PostConstruct
+//	public void init(){
+//		this.key = Keys.hmacShaKeyFor(secretKey);
+//	}
 
 	public Claims getAllClaimsFromToken(String token) {
 		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
