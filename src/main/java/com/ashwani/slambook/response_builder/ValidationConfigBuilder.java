@@ -4,7 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.constants.ResponseConstants;
+import com.ashwani.slambook.model.BaseResponse;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
 
@@ -77,6 +79,44 @@ public class ValidationConfigBuilder {
 		return resp;
 	}
 
+	/**
+	 * @return
+	 */
+	public GetUsersResponse emptySearchString() {
+		GetUsersResponse resp = new GetUsersResponse();
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.EMPTY_SEARCH_REQUEST);
+		resp.setUserList(null);
+		
+		return null;
+	}
+
+	/**
+	 * @return
+	 */
+	public GetAllFriendsResponse invalidGetFriends() {
+		GetAllFriendsResponse resp = new GetAllFriendsResponse();
+		resp= invalidUser(resp);
+		return resp;
+	}
+	/**
+	 * @return
+	 */
+	public GetUsersResponse invalidGetUser() {
+		GetUsersResponse resp = new GetUsersResponse();
+		resp = invalidUser(resp);
+		return resp;
+	}
+
+	public <T> T invalidUser(T t) {
+		((BaseResponse) t).setHttpStatus(HttpStatus.UNAUTHORIZED);
+		((BaseResponse) t).setResponseCode(ResponseConstants.UNAUTHENTIC_CODE);
+		((BaseResponse) t).setResponseDescription(ResponseConstants.UNAUTHENTIC_USER);
+		((BaseResponse) t).setStatus(ResponseConstants.FAILED_STATUS);
+		return t;
+	}
 	
 	
 }

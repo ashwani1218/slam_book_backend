@@ -28,6 +28,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonIgnore
 	@Column(name="user_id")
 	private Long id;
 	
@@ -53,28 +54,35 @@ public class User {
 	@Column(name = "user_password")
 	private String password;
 	
+	@JsonIgnore
 	@Column(name = "user_created_at")
 	private Timestamp createdAt;
 	
+	@JsonIgnore
 	@Column(name = "user_updated_at")
 	private Timestamp updatedAt;
 	
+	@JsonIgnore
 	@Column(name ="isActive",nullable = false)
 	private int isActive;
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
 	private List<Slam> slams;
 	
+	@JsonIgnore
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns=@JoinColumn(name = "user_id"), inverseJoinColumns=@JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
 	
+	@JsonIgnore
 	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(name="USER_FRIENDS",
 			joinColumns = {@JoinColumn(name="USER_ID")},
 			inverseJoinColumns = {@JoinColumn(name="FRIEND_ID")})
 	private Set<User> friends = new HashSet<User>();	
 	
+	@JsonIgnore
 	@ManyToMany(mappedBy = "friends")
 	private Set<User> mates = new HashSet<User>();
 	

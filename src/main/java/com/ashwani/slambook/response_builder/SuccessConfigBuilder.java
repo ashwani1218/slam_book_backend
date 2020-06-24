@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ashwani.slambook.constants.ResponseConstants;
 import com.ashwani.slambook.entity.User;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
 
@@ -89,5 +90,37 @@ public class SuccessConfigBuilder {
 
 		return resp;
 	}
+
+	/**
+	 * @return
+	 */
+	public GetUsersResponse getUsersEmptyList() {
+		GetUsersResponse resp = new GetUsersResponse();
+		
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE_EMPTY_RESPONSE);
+		resp.setUserList(null);
+		resp.setResponseDescription(ResponseConstants.NO_USERS_FOUND);
+		
+		return resp;
+	}
+
+	/**
+	 * @param userList
+	 * @return
+	 */
+	public GetUsersResponse getUsersResponseConfig(List<User> userList) {
+GetUsersResponse resp = new GetUsersResponse();
+		
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
+		resp.setUserList(userList);
+		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
+		
+		return resp;
+	}
+
 
 }

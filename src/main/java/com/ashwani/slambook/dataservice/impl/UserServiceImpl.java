@@ -1,5 +1,6 @@
 package com.ashwani.slambook.dataservice.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,13 @@ public class UserServiceImpl implements UserService{
 	public void saveUser(User user) {
 		userRepository.save(user);
 		
+	}
+
+
+	@Override
+	public List<User> getUsers(String searchString) {
+		
+		return userRepository.findByFirstnameContainingIgnoreCase(searchString);
 	}
 
 
