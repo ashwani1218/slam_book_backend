@@ -12,6 +12,7 @@ import com.ashwani.slambook.constants.ResponseConstants;
 import com.ashwani.slambook.entity.User;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
 import com.ashwani.slambook.model.response.GetUsersResponse;
+import com.ashwani.slambook.model.response.IsUserResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
 
@@ -119,6 +120,34 @@ GetUsersResponse resp = new GetUsersResponse();
 		resp.setUserList(userList);
 		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
 		
+		return resp;
+	}
+
+	/**
+	 * @return
+	 */
+	public IsUserResponse isUserSuccessresponse() {
+		IsUserResponse resp = new IsUserResponse();
+		
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
+		resp.setUser(true);
+		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
+		return resp;
+	}
+
+	/**
+	 * @return
+	 */
+	public IsUserResponse isNotUserSuccessResponse() {
+IsUserResponse resp = new IsUserResponse();
+		
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
+		resp.setUser(false);
+		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
 		return resp;
 	}
 

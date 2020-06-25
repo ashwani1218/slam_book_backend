@@ -115,7 +115,12 @@ public class UserServiceImplementer {
 	public IsUserResponse isUser(String username, String token) {
 		IsUserResponse resp = new IsUserResponse();
 		if(isAuthenticUser(token)) {
-			
+			Optional<User> userFetched = userService.findByUsername(username);
+			if(userFetched.isPresent()) {
+				resp = successConfigBuilder.isUserSuccessresponse();
+			}else {
+				resp = successConfigBuilder.isNotUserSuccessResponse();
+			}
 		}else {
 			resp = validationConfigBuilder.invalidUser(resp);
 		}

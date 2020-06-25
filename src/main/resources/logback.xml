@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration scan="true">
+	<include
+		resource="org/springframework/boot/logging/logback/base.xml" />
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%green(%d{yyyy-MM-dd HH:mm:ss}) %magenta([%thread]) %blue(%-5level) %yellow(%logger{36})
+				- %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="logstash"
+		class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<param name="Encoding" value="UTF-8" />
+		<remoteHost>localhost</remoteHost>
+		<port>5000</port>
+		<encoder class="net.logstash.logback.encoder.LogstashEncoder">
+			<customFields>{"app_name":"Slam book", "app_port": "8080"}</customFields>
+		</encoder>
+	</appender>
+
+<!-- 	<logger name="org.hibernate" level="TRACE">
+		<appender-ref ref="logstash" />
+	</logger> -->
+
+	<root level="INFO">
+		<appender-ref ref="logstash" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>
