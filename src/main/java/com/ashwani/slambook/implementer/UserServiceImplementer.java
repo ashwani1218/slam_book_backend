@@ -7,18 +7,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ashwani.slambook.dataservice.SlamService;
 import com.ashwani.slambook.dataservice.UserService;
+import com.ashwani.slambook.entity.Slam;
 import com.ashwani.slambook.entity.User;
+import com.ashwani.slambook.model.request.CreateSlamRequest;
+import com.ashwani.slambook.model.request.GetUserRequest;
+import com.ashwani.slambook.model.response.CreateSlamResponse;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUserDetailsResponse;
 import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.IsUserResponse;
 import com.ashwani.slambook.response_builder.SuccessConfigBuilder;
 import com.ashwani.slambook.response_builder.ValidationConfigBuilder;
+import com.ashwani.slambook.translator.SlamTranslator;
 import com.ashwani.slambook.util.JWTUtil;
 import com.ashwani.slambook.util.SlamUtils;
+import com.ashwani.slambook.validator.ModelValidator;
 
 /**
  *
@@ -42,7 +52,16 @@ public class UserServiceImplementer {
 	@Autowired
 	private JWTUtil jwtUtil;
 	
+	@Autowired
+	private ModelValidator modelValidator;
 	
+	@Autowired
+	private SlamService slamService;
+	
+	@Autowired
+	private SlamTranslator slamTranslator;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImplementer.class);
 	
 	public  boolean isAuthenticUser(String token) {
 		if(jwtUtil.validateToken(token)) {
@@ -126,5 +145,62 @@ public class UserServiceImplementer {
 		}
 		return resp;
 	}
+
+	
+	/**
+	 * @param request
+	 * @return
+	 */
+	public GetUserDetailsResponse getUserDetails(GetUserRequest request) {
+		GetUserDetailsResponse resp = new GetUserDetailsResponse();
+		if(modelValidator.isValidGetUserRequest(request)) {
+			if(isAuthenticUser(request.getToken())) {
+				Optional<User> user = userService.findByUsername(request.getUsername());
+				LOGGER.info("User fetched in GetUserDetails , {}",user.get());
+				if(user.isPresent()) {
+					resp = successConfigBuilder.getUserDetailsSuccessResponseBuilder(user.get());
+				}
+				else {
+					resp = validationConfigBuilder.getUserDetailsNoSuchUser();
+				}
+			}
+			else {
+				resp = validationConfigBuilder.invalidUser(resp);
+			}
+		}else {
+			resp = validationConfigBuilder.invalidGetUserDetailsRequest();
+		}
+		return resp;
+	}
+
+	/**
+	 * @param req
+	 * @return
+	 */
+	public CreateSlamResponse createSlam(CreateSlamRequest req) {
+		CreateSlamResponse resp = new CreateSlamResponse();
+		if(modelValidator.isValidCreateSlamRequest(req)) {
+			if(isAuthenticUser(req.getToken())) {
+				
+				Slam slam = slamTranslator.translateCreateSlamRequest(req);
+				try {
+					slamService.save(slam);
+					resp = successConfigBuilder.createSlamSuccessResponse(slam);
+				}
+				catch(Exception e) {
+					resp = validationConfigBuilder.createSlamErrorResponse();
+				}
+				
+			}
+			else {
+				resp = validationConfigBuilder.invalidUser(resp);
+			}
+			
+		}else {
+			resp = validationConfigBuilder.emptyCreateSlamRequest();
+		}
+		return resp;
+	}
+	
 
 }

@@ -22,7 +22,7 @@ public class ResponseConstants {
 	public static final String EMPTY_REGISTRATION_REQUEST = "Empty User Request";
 	public static final String UNAUTHENTIC_USER = "Wrong Credentials";
 	public static final String ALREADY_USER = "User Already Exists";
-	public static final String SOMETHING_WENT_WRONG = "Cannot Retrive Friends at this moment";
+	public static final String SOMETHING_WENT_WRONG = "Something went wrong";
 	public static final String INVALID_USER = "Invalid Username";
 	public static final String EMPTY_SEARCH_REQUEST = "EMPTY SEARCH REQUEST";
 

@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashwani.slambook.implementer.UserServiceImplementer;
+import com.ashwani.slambook.model.request.CreateSlamRequest;
 import com.ashwani.slambook.model.request.GetUserRequest;
+import com.ashwani.slambook.model.response.CreateSlamResponse;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUserDetailsResponse;
 import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.IsUserResponse;
 
@@ -56,4 +59,24 @@ public class HomeController {
 		LOGGER.info("Token  {}",req.getToken() );
 		return userServiceImplementer.getUsers(req.getUsername(),req.getToken());
 	}
+	
+	@PostMapping("/getuserdetails")
+	public GetUserDetailsResponse getUserDetails(@RequestBody GetUserRequest req) {
+		return userServiceImplementer.getUserDetails(req);
+	}
+	
+	
+	@PostMapping("/createslam")
+	public CreateSlamResponse createSlam(@RequestBody CreateSlamRequest req) {
+		return userServiceImplementer.createSlam(req);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

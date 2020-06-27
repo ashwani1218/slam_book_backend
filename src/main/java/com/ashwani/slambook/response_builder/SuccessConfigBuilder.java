@@ -9,8 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.constants.ResponseConstants;
+import com.ashwani.slambook.entity.Slam;
 import com.ashwani.slambook.entity.User;
+import com.ashwani.slambook.model.response.CreateSlamResponse;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUserDetailsResponse;
 import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.IsUserResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
@@ -141,7 +144,7 @@ GetUsersResponse resp = new GetUsersResponse();
 	 * @return
 	 */
 	public IsUserResponse isNotUserSuccessResponse() {
-IsUserResponse resp = new IsUserResponse();
+		IsUserResponse resp = new IsUserResponse();
 		
 		resp.setHttpStatus(HttpStatus.OK);
 		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
@@ -150,6 +153,44 @@ IsUserResponse resp = new IsUserResponse();
 		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
 		return resp;
 	}
+
+	/**
+	 * @param user
+	 * @return
+	 */
+	public GetUserDetailsResponse getUserDetailsSuccessResponseBuilder(User user) {
+		
+		GetUserDetailsResponse resp = new GetUserDetailsResponse();
+		
+		resp.setFirstname(user.getFirstname());
+		resp.setLastname(user.getLastname());
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
+		resp.setSlams(user.getSlams());
+		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		
+		return resp;
+	}
+
+	/**
+	 * @param slam
+	 * @return
+	 */
+	public CreateSlamResponse createSlamSuccessResponse(Slam slam) {
+		CreateSlamResponse resp = new CreateSlamResponse();
+		
+		resp.setHttpStatus(HttpStatus.OK);
+		resp.setResponseCode(ResponseConstants.SUCCESS_CODE);
+		resp.setResponseDescription(ResponseConstants.SUCCESS_DESCRIPTION);
+		resp.setStatus(ResponseConstants.SUCCESS_STATUS);
+		resp.setSlamTitle(slam.getTitle());
+		
+		
+		return resp;
+	}
+
+	
 
 
 }

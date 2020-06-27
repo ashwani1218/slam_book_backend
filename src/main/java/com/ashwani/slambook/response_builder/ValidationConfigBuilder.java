@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 
 import com.ashwani.slambook.constants.ResponseConstants;
 import com.ashwani.slambook.model.BaseResponse;
+import com.ashwani.slambook.model.response.CreateSlamResponse;
 import com.ashwani.slambook.model.response.GetAllFriendsResponse;
+import com.ashwani.slambook.model.response.GetUserDetailsResponse;
 import com.ashwani.slambook.model.response.GetUsersResponse;
 import com.ashwani.slambook.model.response.LoginResponse;
 import com.ashwani.slambook.model.response.RegistrationResponse;
@@ -116,6 +118,58 @@ public class ValidationConfigBuilder {
 		((BaseResponse) t).setResponseDescription(ResponseConstants.UNAUTHENTIC_USER);
 		((BaseResponse) t).setStatus(ResponseConstants.FAILED_STATUS);
 		return t;
+	}
+
+	/**
+	 * @return
+	 */
+	public GetUserDetailsResponse invalidGetUserDetailsRequest() {
+		GetUserDetailsResponse resp = new GetUserDetailsResponse();
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.EMPTY_SEARCH_REQUEST);
+		return resp;
+	}
+
+	/**
+	 * @return
+	 */
+	public GetUserDetailsResponse getUserDetailsNoSuchUser() {
+		
+		GetUserDetailsResponse resp = new GetUserDetailsResponse();
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.INVALID_USER);
+		return resp;
+	}
+
+	/**
+	 * @return
+	 */
+	public CreateSlamResponse emptyCreateSlamRequest() {
+		CreateSlamResponse resp = new CreateSlamResponse();
+		
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.EMPTY_SEARCH_REQUEST);
+		
+		return resp;
+	}
+
+	/**
+	 * @return
+	 */
+	public CreateSlamResponse createSlamErrorResponse() {
+		CreateSlamResponse resp = new CreateSlamResponse();
+		resp.setHttpStatus(HttpStatus.BAD_REQUEST);
+		resp.setStatus(ResponseConstants.FAILED_STATUS);
+		resp.setResponseCode(ResponseConstants.FAILURE_CODE);
+		resp.setResponseDescription(ResponseConstants.SOMETHING_WENT_WRONG);
+		
+		return resp;
 	}
 	
 	
