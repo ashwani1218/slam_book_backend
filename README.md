@@ -1,4 +1,4 @@
-# Slam Book Backend
+# Slam Book Backend [![Build Status](https://travis-ci.org/ashwani1218/slam_book_backend.svg?branch=master)](https://travis-ci.org/ashwani1218/slam_book_backend)
 
 This application is the backend for Slam book application.
 
